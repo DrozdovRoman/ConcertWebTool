@@ -19,4 +19,7 @@ from core import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('concert',views.concert, name='concert'),
+    path('update-page/<int:pk>',views.update_page, name='update_page'),
+    path('delete-page/<int:pk>',views.delete_page, name='delete_page'),
 ]
