@@ -9,7 +9,7 @@ class Concert(models.Model):
     status = models.CharField(max_length=10, verbose_name = "Статус Концерта")
 
     def __str__(self):
-        return self.name + " " + self.city + " " + str(self.concert_date)
+        return '{} {} {}'.format(self.name, self.city, self.concert_date)
 
     class meta:
         verbose_name = "Концерт"

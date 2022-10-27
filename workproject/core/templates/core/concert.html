@@ -19,7 +19,6 @@
 
 {% if update %}
 <p class="mt-4">Страница редактирования</p>
-
     {% if success_update %}
     <p style="color:red">Запись обновлена</p>
     {% endif %}
@@ -56,7 +55,7 @@
                 <td><a href = "{% url 'update_page' i.id%}"> Редактировать</a></td>
                 <td><a href = "{% url 'delete_page' i.id%}"> Удалить </a></td>
             </tr>
-            {% endfor %}
+            {% endfor %} 
         </tbody>
         </table>
 {% endif %}
