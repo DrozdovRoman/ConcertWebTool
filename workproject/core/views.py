@@ -3,6 +3,7 @@ from .models import Concert
 from .forms import ConcertForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib import messages
 
 # Create your views here.
 
@@ -14,24 +15,35 @@ def home(request):
     template = "core/index.html"
     return render(request,template,context)
 
-class ConcertCreateView(CreateView):
+class CustomSuccessMessage:
+    @property
+    def success_msg(self):
+        return False
+    def form_valid(self,form):
+        messages.success(self.request, self.success_msg)
+        return super().form_valid(form)
+
+class ConcertCreateView(CustomSuccessMessage, CreateView):
     model = Concert
     template_name = 'core/concert.html'
     form_class = ConcertForm
     success_url = reverse_lazy('concert')
+    success_msg = 'Запись создана'
     def get_context_data(self, **kwargs):
         kwargs['list_concert'] = Concert.objects.all().order_by("id")
         return super().get_context_data(**kwargs)
 
 
-class ConcertUpdateView(UpdateView):
+class ConcertUpdateView(CustomSuccessMessage, UpdateView):
     model = Concert
     template_name = 'core/concert.html'
     form_class = ConcertForm
     success_url = reverse_lazy('concert')
+    success_msg = 'Объект обновлен'
     def get_context_data(self, **kwargs):
         kwargs['update'] = True
         return super().get_context_data(**kwargs)
+
 
 def delete_page(request,pk):
     get_concert = Concert.objects.get(pk = pk)

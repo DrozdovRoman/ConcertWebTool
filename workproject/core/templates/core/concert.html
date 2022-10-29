@@ -5,31 +5,43 @@
 
 {% block content%}
     <div style = "width: 95%; margin-right: auto; margin-left: auto;">
+{% if not update %}
     <h1 class = "mt-4"> Список концертов </h1>
+{% else %}
+    <h1 class = "mt-4"> Страница редактирования </h1>
+{% endif %}
 
 
     <!-- Button trigger modal -->
+{% if not update %}
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Добавить новый концерт
 </button>
+{% endif %}
 
 {% if success %}
 <p style = "color:red;"> Запись добавлена</p>
 {% endif %}
 
+{% if messages %}
+<div class = "alert alert-success mt-4">
+    {% for m in messages %}
+        {{m}}
+    {% endfor %}
+</div>
+{% endif %}
+
 {% if update %}
-<p class="mt-4">Страница редактирования</p>
     {% if success_update %}
     <p style="color:red">Запись обновлена</p>
     {% endif %}
-
-<p><a href="{% url 'concert' %}">Вернуться назад</a></p>
 
 <form id = "update_data" method="post">
     {% csrf_token %}
     {{form}}
 </form>
-<button form = "update_data" type="submit" class="btn btn-primary mt-4">Обновить</button>
+<p style = "position: absolute; right: 3%;">  <a  class = "btn btn-primary" href="{% url 'concert' %}">Вернуться назад</a> <button form = "update_data" type="submit" class="btn btn-primary ">Обновить</button></p>
+
 
 {% else %}
     <table class="table table-bordered mt-4">
@@ -64,7 +76,7 @@
         <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Добавление нового концерта</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

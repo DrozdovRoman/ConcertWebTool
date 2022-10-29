@@ -29,5 +29,11 @@ main .mainPage h1{
     margin-top: 20%;
 }
 
+.form-select { 
+    display: block;
+    } 
+    .form-select select{
+        width: 20px;
+    }
 
 
