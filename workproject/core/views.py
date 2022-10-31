@@ -15,6 +15,22 @@ def home(request):
     template = "core/index.html"
     return render(request,template,context)
 
+def sell(request):
+    context = {
+
+    }
+    
+    template = "core/sell.html"
+    return render(request,template,context)
+
+def target(request):
+    context = {
+
+    }
+    
+    template = "core/target.html"
+    return render(request,template,context)
+
 class CustomSuccessMessage:
     @property
     def success_msg(self):

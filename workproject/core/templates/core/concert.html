@@ -5,6 +5,7 @@
 
 {% block content%}
     <div style = "width: 95%; margin-right: auto; margin-left: auto;">
+
 {% if not update %}
     <h1 class = "mt-4"> Список концертов </h1>
 {% else %}
@@ -14,7 +15,7 @@
 
     <!-- Button trigger modal -->
 {% if not update %}
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="position: relative; left:83%">
     Добавить новый концерт
 </button>
 {% endif %}

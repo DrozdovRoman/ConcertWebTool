@@ -28,10 +28,16 @@
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Продажи</a>
+                {% url 'sell' as url_concert %}
+                <a class="nav-link {% if url_concert ==  request.path %} active {% endif %}" href="{{url_concert}}">Продажи
+                    <span class="visually-hidden">(current)</span>
+                </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Реклама</a>
+                {% url 'target' as url_concert %}
+                <a class="nav-link {% if url_concert ==  request.path %} active {% endif %}" href="{{url_concert}}">Таргет
+                    <span class="visually-hidden">(current)</span>
+                </a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#">О нас</a>
