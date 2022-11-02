@@ -1,4 +1,5 @@
 from email.policy import default
+from tabnanny import verbose
 from django.db import models
 
 # Create your models here.
@@ -88,11 +89,10 @@ class Concert(models.Model):
     concert_date =  models.DateField(verbose_name = "Дата")
     status = models.CharField(max_length=10, verbose_name = "Статус Концерта", choices = CHOICE_STATUS)
     def __str__(self):
-        return '{} {} {}'.format(self.name, self.city, self.concert_date)
+        return '{} {} {}'.format(self.name, self.city, self.concert_date.strftime('%d.%m.%Y'))
 
     class meta:
-        verbose_name = "Концерт"
-        verbose_name_plural = "Концерты"
+        ordering = ["status"]
 
 class TargetInfo(models.Model):
     targetAccountID = models.CharField(max_length=10, verbose_name = "ID Личного кабинета клиента")
@@ -106,4 +106,4 @@ class QticketsSalesInfo(models.Model):
     qticketsAccountName = models.CharField(max_length = 30, verbose_name = "Название аккаунта Qtickets")
     cat = models.ForeignKey(Concert, on_delete = models.PROTECT)
     def __str__(self):
-        return self.qticketsAccountID
+        return self.qticketsConcertID
