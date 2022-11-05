@@ -4,13 +4,29 @@
 {% block title%} Продажи {% endblock %}
 
 {% block content%}
-<div class = "mainPage">
-    <div class = "mainInfo">
-        <h1>
-            <img src = "{% static 'core/img/volume-up dark.svg'%}" alt="Логотип" width="75px" fill = #fff>
-            Продажи
-        </h1>
-        Анализируйте данные при работе с концертами!
-    </div>
+<div style = "width: 95%; margin-right: auto; margin-left: auto;">
+    <h1 class = "mt-4"> Список кабинетов продаж </h1>
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Концерт</th>
+                <th scope="col">Аккаунт Qtickets</th>
+                <th scope="col">ID мероприятия</th>
+                <th scope="col">Редактирование</th>
+                <th scope="col">Удаление</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for qticketsInfo in object_list %}
+            <tr>
+                <th style="width: 100px;">{{qticketsInfo.id}}</th>
+                <td style="text-align:left; width: 250px;">{{qticketsInfo.cat}}</td>
+                <td style="width: 200px;">{{qticketsInfo.qticketsAccountName}}</td>
+                <td style="width: 200px;">{{qticketsInfo.qticketsConcertID}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
 </div>
 {% endblock %}

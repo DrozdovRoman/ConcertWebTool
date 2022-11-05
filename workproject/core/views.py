@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
-from .models import Concert
+from .models import Concert,QticketsSalesInfo
 from .forms import ConcertForm
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib import messages
 
 # Create your views here.
@@ -15,13 +15,18 @@ def home(request):
     template = "core/index.html"
     return render(request,template,context)
 
-def sell(request):
-    context = {
+# def sell(request):
+#     context = {
+#         list_sell : QticketsSalesInfo.objects.all().order_by("id"),
 
-    }
+#     }
     
-    template = "core/sell.html"
-    return render(request,template,context)
+#     template = "core/sell.html"
+#     return render(request,template,context)
+
+class SellListView(ListView):
+    model = QticketsSalesInfo
+    template_name = "core/sell.html"
 
 def target(request):
     context = {
