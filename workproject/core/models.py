@@ -97,13 +97,13 @@ class Concert(models.Model):
 class TargetInfo(models.Model):
     targetAccountID = models.CharField(max_length=10, verbose_name = "ID Личного кабинета клиента")
     targetCompanyID = models.CharField(max_length=10, verbose_name = "ID Концерта")
-    cat = models.ForeignKey(Concert, on_delete = models.PROTECT)
+    cat = models.ForeignKey(Concert, on_delete = models.CASCADE)
     def __str__(self):
         return self.targetCompanyID
 
 class QticketsSalesInfo(models.Model):
     qticketsConcertID = models.CharField(max_length=6, verbose_name = "ID продажи билетов")
     qticketsAccountName = models.CharField(max_length = 30, verbose_name = "Название аккаунта Qtickets")
-    cat = models.ForeignKey(Concert, on_delete = models.PROTECT)
+    cat = models.ForeignKey(Concert, on_delete = models.CASCADE)
     def __str__(self):
         return self.qticketsConcertID

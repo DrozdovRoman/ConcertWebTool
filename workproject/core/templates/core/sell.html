@@ -5,7 +5,44 @@
 
 {% block content%}
 <div style = "width: 95%; margin-right: auto; margin-left: auto;">
+
+{% if not update %}
     <h1 class = "mt-4"> Список кабинетов продаж </h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="position: relative; left:83%">
+        Добавить новый концерт
+    </button>
+{% else %}
+    <h1 class = "mt-4"> Страница редактирования</h1>
+{% endif %}
+
+{% if success %}
+<p style = "color:red;"> Запись добавлена</p>
+{% endif %}
+
+{% if messages %}
+<div class = "alert alert-success mt-4">
+    {% for m in messages %}
+        {{m}}
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if update %}
+    {% if success_update %}
+    <p style="color:red">Запись обновлена</p>
+    {% endif %}
+
+<form id = "update_data" method="post">
+    {% csrf_token %}
+    <h3 class ='mb-4 mt-4'>{{account}}</h3>
+    <h5>
+    {{form}}
+    </h5>
+</form>
+<p style = "position: absolute; right: 3%;">  <a  class = "btn btn-primary" href="{% url 'sell' %}">Вернуться назад</a> <button form = "update_data" type="submit" class="btn btn-primary ">Обновить</button></p>
+
+
+{% else %}
     <table class="table table-bordered mt-4">
         <thead>
             <tr>
@@ -24,9 +61,12 @@
                 <td style="text-align:left; width: 250px;">{{qticketsInfo.cat}}</td>
                 <td style="width: 200px;">{{qticketsInfo.qticketsAccountName}}</td>
                 <td style="width: 200px;">{{qticketsInfo.qticketsConcertID}}</td>
+                <td><a href = "{% url 'update_sell_page' qticketsInfo.id%}"> Редактировать</a></td>
+                <td><a href = "{% url 'delete_sell_page' qticketsInfo.id%}"> Удалить </a></td>
             </tr>
             {% endfor %}
         </tbody>
         </table>
 </div>
+{% endif %}
 {% endblock %}

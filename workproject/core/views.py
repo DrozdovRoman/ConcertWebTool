@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from .models import Concert,QticketsSalesInfo
-from .forms import ConcertForm
+from .forms import ConcertForm,SaleForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib import messages
@@ -23,10 +23,6 @@ def home(request):
     
 #     template = "core/sell.html"
 #     return render(request,template,context)
-
-class SellListView(ListView):
-    model = QticketsSalesInfo
-    template_name = "core/sell.html"
 
 def target(request):
     context = {
@@ -66,10 +62,30 @@ class ConcertUpdateView(CustomSuccessMessage, UpdateView):
         return super().get_context_data(**kwargs)
 
 
-def delete_page(request,pk):
+def delete_concert_page(request,pk):
     get_concert = Concert.objects.get(pk = pk)
     get_concert.delete()
     return redirect(reverse('concert'))
+
+class SellListView(ListView):
+    model = QticketsSalesInfo
+    template_name = "core/sell.html"
+
+class SellUpdateView(CustomSuccessMessage, UpdateView):
+    model = QticketsSalesInfo
+    template_name = 'core/sell.html'
+    form_class = SaleForm
+    success_url = reverse_lazy('sell')
+    success_msg = 'Объект обновлен'
+    def get_context_data(self, **kwargs):
+        kwargs['account'] = self.object.cat
+        kwargs['update'] = True
+        return super().get_context_data(**kwargs)
+
+def delete_sell_page(request,pk):
+    get_concert = QticketsSalesInfo.objects.get(pk = pk)
+    get_concert.delete()
+    return redirect(reverse('sell'))
 
 # class ConcertDeleteView(DeleteView):
 #     model = Concert
