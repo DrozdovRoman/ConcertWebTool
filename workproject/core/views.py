@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from .models import Concert,QticketsSalesInfo
-from .forms import ConcertForm,SaleForm
+from .models import Concert,QticketsSalesInfo, TargetInfo
+from .forms import ConcertForm,SaleForm, TargetForm, SaleCreateForm,TargetCreateForm
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib import messages
@@ -40,6 +40,8 @@ class CustomSuccessMessage:
         messages.success(self.request, self.success_msg)
         return super().form_valid(form)
 
+# Представления КОНЦЕРТЫ
+
 class ConcertCreateView(CustomSuccessMessage, CreateView):
     model = Concert
     template_name = 'core/concert.html'
@@ -67,9 +69,17 @@ def delete_concert_page(request,pk):
     get_concert.delete()
     return redirect(reverse('concert'))
 
-class SellListView(ListView):
+# Представления ПРОДАЖИ
+
+class SellCreateView(CustomSuccessMessage, CreateView):
     model = QticketsSalesInfo
-    template_name = "core/sell.html"
+    template_name = 'core/sell.html'
+    form_class = SaleCreateForm
+    success_url = reverse_lazy('sell')
+    success_msg = 'Запись создана'
+    def get_context_data(self, **kwargs):
+        kwargs['list_concert'] = QticketsSalesInfo.objects.all().order_by("id")
+        return super().get_context_data(**kwargs)
 
 class SellUpdateView(CustomSuccessMessage, UpdateView):
     model = QticketsSalesInfo
@@ -86,6 +96,41 @@ def delete_sell_page(request,pk):
     get_concert = QticketsSalesInfo.objects.get(pk = pk)
     get_concert.delete()
     return redirect(reverse('sell'))
+
+# Представления ТАРГЕТ
+
+# class TargetListView(ListView):
+#     model = TargetInfo
+#     template_name = "core/target.html"
+
+class TargetCreateView(CustomSuccessMessage, CreateView):
+    model = TargetInfo
+    template_name = 'core/target.html'
+    form_class = TargetCreateForm
+    success_url = reverse_lazy('target')
+    success_msg = 'Запись создана'
+    def get_context_data(self, **kwargs):
+        kwargs['list_concert'] = TargetInfo.objects.all().order_by("id")
+        return super().get_context_data(**kwargs)
+
+class TargetUpdateView(CustomSuccessMessage, UpdateView):
+    model = TargetInfo
+    template_name = 'core/target.html'
+    form_class = TargetForm
+    success_url = reverse_lazy('target')
+    success_msg = 'Объект обновлен'
+    def get_context_data(self, **kwargs):
+        kwargs['account'] = self.object.cat
+        kwargs['update'] = True
+        return super().get_context_data(**kwargs)
+
+def delete_target_page(request,pk):
+    get_concert = TargetInfo.objects.get(pk = pk)
+    get_concert.delete()
+    return redirect(reverse('target'))
+
+
+
 
 # class ConcertDeleteView(DeleteView):
 #     model = Concert

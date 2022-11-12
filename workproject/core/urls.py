@@ -22,8 +22,10 @@ urlpatterns = [
     path('concert', views.ConcertCreateView.as_view(), name='concert'),
     path('update-concertPage/<int:pk>',views.ConcertUpdateView.as_view(), name='update_concert_page'),
     path('delete-concertPage/<int:pk>',views.delete_concert_page, name='delete_concert_page'),
-    path('sell', views.SellListView.as_view(), name='sell'),
+    path('sell', views.SellCreateView.as_view(), name='sell'),
     path('update-sellPage/<int:pk>',views.SellUpdateView.as_view(), name='update_sell_page'),
     path('delete-sellPage/<int:pk>',views.delete_sell_page, name='delete_sell_page'),
-    path('target', views.target, name='target'),
+    path('target', views.TargetCreateView.as_view(), name='target'),
+    path('update-targetPage/<int:pk>',views.TargetUpdateView.as_view(), name='update_target_page'),
+    path('delete-targetPage/<int:pk>',views.delete_target_page, name='delete_target_page'),
 ]
