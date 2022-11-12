@@ -20,8 +20,10 @@ from core import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('concert', views.ConcertCreateView.as_view(), name='concert'),
-    path('update-page/<int:pk>',views.ConcertUpdateView.as_view(), name='update_page'),
-    path('delete-page/<int:pk>',views.delete_page, name='delete_page'),
-    path('sell', views.sell, name='sell'),
+    path('update-concertPage/<int:pk>',views.ConcertUpdateView.as_view(), name='update_concert_page'),
+    path('delete-concertPage/<int:pk>',views.delete_concert_page, name='delete_concert_page'),
+    path('sell', views.SellListView.as_view(), name='sell'),
+    path('update-sellPage/<int:pk>',views.SellUpdateView.as_view(), name='update_sell_page'),
+    path('delete-sellPage/<int:pk>',views.delete_sell_page, name='delete_sell_page'),
     path('target', views.target, name='target'),
 ]

@@ -9,7 +9,7 @@
 {% if not update %}
     <h1 class = "mt-4"> Список концертов </h1>
 {% else %}
-    <h1 class = "mt-4"> Страница редактирования </h1>
+    <h1 class = "mt-4 mb-4"> Страница редактирования </h1>
 {% endif %}
 
 
@@ -38,8 +38,10 @@
     {% endif %}
 
 <form id = "update_data" method="post">
+    <h5>
     {% csrf_token %}
     {{form}}
+    </h5>
 </form>
 <p style = "position: absolute; right: 3%;">  <a  class = "btn btn-primary" href="{% url 'concert' %}">Вернуться назад</a> <button form = "update_data" type="submit" class="btn btn-primary ">Обновить</button></p>
 
@@ -65,8 +67,8 @@
                 <td style="width: 200px;">{{i.city}}</td>
                 <td style="width: 200px;">{{i.concert_date}}</td>
                 <td style="width: 200px;">{{i.status}}</td>
-                <td><a href = "{% url 'update_page' i.id%}"> Редактировать</a></td>
-                <td><a href = "{% url 'delete_page' i.id%}"> Удалить </a></td>
+                <td><a href = "{% url 'update_concert_page' i.id%}"> Редактировать</a></td>
+                <td><a href = "{% url 'delete_concert_page' i.id%}"> Удалить </a></td>
             </tr>
             {% endfor %} 
         </tbody>
